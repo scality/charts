@@ -7,10 +7,24 @@ metadata:
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
     release: {{ .Release.Name | quote }}
     heritage: {{ .Release.Service | quote }}
+{{- if or .Values.service_annotations .Values.prometheusExport.enabled }
+  annotations:
+{{- end -}}
+{{- if .Values.annotations }}
+{{ toYaml .Values.service_annotations | indent 4 }}
+{{- end -}}
+{{- if .Values.prometheusExport }}
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "9308"
+{{- end }}
 spec:
   ports:
   - name: broker
     port: 9092
+{{- if .Values.prometheusExport }}
+  - name: prom-kafka
+    port: 9308
+{{- end }}
   selector:
     app: {{ include "kafka.name" . | quote }}
     release: {{ .Release.Name | quote }}

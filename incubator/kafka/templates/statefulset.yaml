@@ -19,6 +19,16 @@ spec:
       labels:
         app: {{ include "kafka.name" . | quote }}
         release: {{ .Release.Name | quote }}
+{{- if or .Values.annotations .Values.prometheusExport.enabled }}
+      annotations:
+{{- end -}}
+{{- if .Values.annotations }}
+{{ toYaml .Values.annotations | indent 8 }}
+{{- end -}}
+{{- if .Values.prometheusExport }}
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9308"
+{{- end }}
     spec:
 {{- if .Values.affinity }}
       affinity:
@@ -83,6 +93,15 @@ spec:
         volumeMounts:
         - name: datadir
           mountPath: "{{ .Values.dataDirectory }}"
+{{- if .Values.prometheusExport.enabled }}
+      - name: {{ template "kafka.name" . }}-prom-exporter
+        image: {{ .Values.prometheusExport.image }}:{{ .Values.prometheusExport.imageTag }}
+        args:
+        - --kafka.server=localhost:9092
+        ports:
+        - containerPort: 9308
+          name: prom-kafka
+{{- end }}
   volumeClaimTemplates:
   - metadata:
       name: datadir

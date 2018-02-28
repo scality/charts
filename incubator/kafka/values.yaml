@@ -50,6 +50,15 @@ logSubPath: "logs"
 ##
 affinity: {}
 
+## Service annotations
+service_annotations: {}
+
+## Enable the prometheus export sidecar pod
+prometheusExport:
+    enabled: false
+    image: danielqsj/kafka-exporter
+    imageTag: v1.0.1
+
 ## Configuration Overrides. Specify any Kafka settings you would like set on the StatefulSet
 ## here in map format, as defined in the official docs.
 ## ref: https://kafka.apache.org/documentation/#brokerconfigs
