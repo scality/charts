@@ -20,6 +20,27 @@ resources:
 ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#taints-and-tolerations-beta-feature
 nodeSelector: {}
 tolerations: []
+sentinelAffinity: |
+   podAntiAffinity:
+     requiredDuringSchedulingIgnoredDuringExecution:
+     - labelSelector:
+         matchLabels:
+           app: {{ template "redis-ha.name" . }}
+           release: {{ .Release.Name | quote }}
+           component: sentinel
+       topologyKey: kubernetes.io/hostname
+serverAffinity: |
+   podAntiAffinity:
+     requiredDuringSchedulingIgnoredDuringExecution:
+     - labelSelector:
+         matchLabels:
+           app: {{ template "redis-ha.name" . }}
+           release: {{ .Release.Name | quote }}
+           component: server
+       topologyKey: kubernetes.io/hostname
+
+podDisruptionBudget:
+  maxUnavailable: 1
 
 ## Redis image version
 redis_image: quay.io/bzumhagen/kube-redis-ha:4.0.9-2

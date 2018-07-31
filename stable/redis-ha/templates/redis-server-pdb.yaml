@@ -5,8 +5,8 @@ metadata:
   labels:
 {{ include "labels.standard" . | indent 4 }}
 spec:
-  maxUnavailable: 1
   selector:
     matchLabels:
       redis-node: "true"
       release: {{ .Release.Name }}
+{{ toYaml .Values.podDisruptionBudget | indent 2 }}
