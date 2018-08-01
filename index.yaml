@@ -2,7 +2,7 @@ apiVersion: v1
 entries:
   redis-ha:
   - appVersion: 4.0.9-r0
-    created: 2018-07-31T14:40:40.558765876-07:00
+    created: 2018-08-01T16:49:41.029590914-07:00
     description: Highly available Redis cluster with multiple sentinels and standbys.
     digest: 689865a0fbc7572d0a06595d712281465d0ee6f9ef275677f62fa7096d0066af
     engine: gotpl
@@ -25,4 +25,23 @@ entries:
     urls:
     - https://scality.github.com/charts/redis-ha-3.0.0.tgz
     version: 3.0.0
-generated: 2018-07-31T14:40:40.556778975-07:00
+  zenko:
+  - apiVersion: v1
+    created: 2018-08-01T16:49:41.03559614-07:00
+    description: Zenko is an open source multi-cloud data controller
+    digest: 507e7808a82950de94515947150bcb8a4e4a3e4fe97e3695aa321914b65862b6
+    home: https://github.com/scality/Zenko
+    keywords:
+    - s3-compatible
+    - replication
+    - nfs
+    - cloud-storage
+    name: zenko
+    sources:
+    - https://github.com/scality/Zenko
+    - https://github.com/scality/S3
+    - https://github.com/scality/backbeat
+    urls:
+    - https://scality.github.com/charts/zenko-0.9.0.tgz
+    version: 0.9.0
+generated: 2018-08-01T16:49:41.027471092-07:00
