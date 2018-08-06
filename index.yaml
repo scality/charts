@@ -1,8 +1,29 @@
 apiVersion: v1
 entries:
+  mongodb-replicaset:
+  - appVersion: "3.4"
+    created: 2018-08-06T17:16:20.759215632-07:00
+    description: NoSQL document-oriented database that stores JSON-like documents
+      with dynamic schemas, simplifying the integration of data in content-driven
+      applications.
+    digest: 03f6b822643e8fc63ce45a978729280e7132fbf7852ea99baf5635aa29660dab
+    home: https://github.com/mongodb/mongo
+    icon: https://webassets.mongodb.com/_com_assets/cms/mongodb-logo-rgb-j6w271g1xn.jpg
+    maintainers:
+    - email: ramanathana@google.com
+      name: foxish
+    - email: unguiculus@gmail.com
+      name: unguiculus
+    name: mongodb-replicaset
+    sources:
+    - https://github.com/mongodb/mongo
+    - https://github.com/percona/mongodb_exporter
+    urls:
+    - https://scality.github.com/charts/mongodb-replicaset-3.5.2.tgz
+    version: 3.5.2
   redis-ha:
   - appVersion: 4.0.9-r0
-    created: 2018-08-01T16:49:41.029590914-07:00
+    created: 2018-08-06T17:16:20.759792682-07:00
     description: Highly available Redis cluster with multiple sentinels and standbys.
     digest: 689865a0fbc7572d0a06595d712281465d0ee6f9ef275677f62fa7096d0066af
     engine: gotpl
@@ -27,7 +48,7 @@ entries:
     version: 3.0.0
   zenko:
   - apiVersion: v1
-    created: 2018-08-01T16:49:41.03559614-07:00
+    created: 2018-08-06T17:16:20.766033956-07:00
     description: Zenko is an open source multi-cloud data controller
     digest: 507e7808a82950de94515947150bcb8a4e4a3e4fe97e3695aa321914b65862b6
     home: https://github.com/scality/Zenko
@@ -44,4 +65,4 @@ entries:
     urls:
     - https://scality.github.com/charts/zenko-0.9.0.tgz
     version: 0.9.0
-generated: 2018-08-01T16:49:41.027471092-07:00
+generated: 2018-08-06T17:16:20.758204514-07:00
