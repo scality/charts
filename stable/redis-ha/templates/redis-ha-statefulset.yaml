@@ -36,32 +36,37 @@ spec:
 {{ toYaml .Values.tolerations | indent 8 }}
       {{- end }}
       affinity:
- {{ tpl .Values.serverAffinity . | indent 8 }}
+{{ tpl .Values.affinity . | indent 8 }}
       initContainers:
       - name: copy-config
-        image: busybox
+        image: {{ .Values.image }}:{{ .Values.tag }}
         command:
-          - "sh"
+          - "bash"
         args:
           - "-c"
           - |
+            MASTER=`redis-cli -h r-redis-ha -p 26379 sentinel get-master-addr-by-name mymaster | grep -E '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}'`
             set -ex
-            if [[ ! -f /data/redis.conf && ! -f /data/sentinel.conf ]]; then
+            if [[ ! -f /data/conf/redis.conf && ! -f /data/conf/sentinel.conf ]]; then
                 echo "No redis config found!"
                 mkdir -p /data/conf/
                 echo "Copying base config.."
 
                 cp /readonly-config/redis.conf /data/conf/redis.conf
                 cp /readonly-config/sentinel.conf /data/conf/sentinel.conf
-                chown -R {{ .Values.securityContext.runAsUser }}:{{ .Values.securityContext.fsgroup }} /data/conf
+                chown -R {{ .Values.securityContext.runAsUser }}:{{ .Values.securityContext.fsGroup }} /data/
    
                 if [[ "$HOSTNAME" != '{{ template "redis-ha.fullname" . }}-0' ]]; then
                     echo "Copying slave config.."
-                    cat /readonly-config/slave.conf >> /data/conf/redis.conf
+                    sed -i 's/#slaveof/slaveof/' /data/conf/redis.conf
+                    #cat /readonly-config/slave.conf >> /data/conf/redis.conf
                 fi
+            elif [[ "$MASTER" != "" ]]; then
+                echo "Found existing redis master, updating config"
+                sed -i "s/^.*slaveof.*/slaveof ${MASTER} 6379/" /data/conf/redis.conf
             else
-                echo "Found existing configs found in /data"
-                # Need to update configs when changed
+                echo "Updating configs"
+                # Need to update configs from values when updated
                 # echo "updating sentinel config"
                 # grep -v /readonly-config/sentinel.conf -e "sentinel monitor" 
             fi

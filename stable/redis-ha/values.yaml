@@ -11,7 +11,7 @@ replicas: 3
 redis:
   port: 6379
   masterGroupName: mymaster
-  minSlavesToWrite: 2
+  minSlavesToWrite: 1
   minSlavesMaxLag: 5   # Value in seconds
   auth: false          # Configures redis with AUTH (requirepass & masterauth conf params)
   maxMemory: "0"       # Max memory to use for each redis instance. Default is unlimited.
@@ -82,15 +82,14 @@ sentinelAffinity: |
            release: {{ .Release.Name | quote }}
            component: sentinel
        topologyKey: kubernetes.io/hostname
-serverAffinity: |
-   podAntiAffinity:
-     requiredDuringSchedulingIgnoredDuringExecution:
-     - labelSelector:
-         matchLabels:
-           app: {{ template "redis-ha.name" . }}
-           release: {{ .Release.Name | quote }}
-           component: server
-       topologyKey: kubernetes.io/hostname
+affinity: |
+  podAntiAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+    - labelSelector:
+        matchLabels:
+          app: {{ template "redis-ha.name" . }}
+          release: {{ .Release.Name | quote }}
+      topologyKey: kubernetes.io/hostname
 
 podDisruptionBudget:
   maxUnavailable: 1

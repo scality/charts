@@ -16,8 +16,7 @@ data:
     repl-diskless-sync {{ .Values.redis.disklessReplication }}
     {{ .Values.redis.rdbBackups }}
     {{ .Values.redis.addionalConfig }}
-  slave.conf: |
-    slaveof {{ template "redis-ha.fullname" . }}-0.{{ template "redis-ha.fullname" . }} 6379
+    #slaveof {{ template "redis-ha.fullname" . }}-0.{{ template "redis-ha.fullname" . }} 6379
 
   sentinel.conf: |
     sentinel monitor {{ .Values.redis.masterGroupName }} {{ template "redis-ha.fullname" . }}-0.{{ template "redis-ha.fullname" . }} 6379 {{ .Values.sentinel.quorum }}
