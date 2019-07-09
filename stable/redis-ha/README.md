@@ -51,6 +51,7 @@ The command removes all the Kubernetes components associated with the chart and 
 
 The following table lists the configurable parameters of the Redis chart and their default values.
 
+<<<<<<< Updated upstream
 | Parameter                        | Description                                                                                                                  | Default                                                   |
 | -------------------------------- | -----------------------------------------------------                                                                        | --------------------------------------------------------- |
 | `image`                          | Redis image                                                                                                                  | `redis`                                                   |
@@ -73,6 +74,48 @@ The following table lists the configurable parameters of the Redis chart and the
 | `nodeSelector`                   | Node labels for pod assignment                                                                                               | `{}`                                                      |
 | `tolerations`                    | Toleration labels for pod assignment                                                                                         | `[]`                                                      |
 | `podAntiAffinity.server`         | Antiaffinity for pod assignment of servers, `hard` or `soft`                                                                 | `Hard node and soft zone anti-affinity`                   |
+=======
+| Parameter                                     | Description                                                                                                   | Default                                                   |
+| ----------------------------------------      | -----------------------------------------------------                                                         | --------------------------------------------------------- |
+| `image`                                       | Redis image                                                                                                   | `redis`                                                   |
+| `tag`                                         | Redis tag                                                                                                     | `4.0.11-stretch`                                          |
+| `replicas`                                    | Number of redis master/slave pods                                                                             | `3`                                                       |
+| `redis.port`                                  | Port to access the redis service                                                                              | `6379`                                                    |
+| `redis.masterGroupName`                       | Redis convention for naming the cluster group                                                                 | `mymaster`                                                |
+| `redis.config`                                | Any valid redis config options in this section will be applied to each server (see below)                     | see values.yaml                                           |
+| `redis.customConfig`                          | Allows for custom redis.conf files to be applied. If this is used then `redis.config` is ignored              | ``                                                        |
+| `redis.livenessProbe.initialDelaySeconds`     | Delay before the Redis liveness probe is initiated                                                            | `30`                                                      |
+| `redis.livenessProbe.timeoutSeconds`          | When the Redis probe times out                                                                                | `1`                                                       |
+| `redis.livenessProbe.failureThreshold`        | Minimum consecutive failures for the Redis probe to be considered failed after having succeeded.              | `3`                                                       |
+| `redis.livenessProbe.periodSeconds`           | How often to perform the Redis probe                                                                          | `5`                                                       |
+| `redis.livenessProbe.successThreshold`        | Minimum consecutive successes for the Redis probe to be considered successful after having failed.            | `1`                                                       |
+| `redis.readinessProbe.initialDelaySeconds`    | Delay before the Redis readiness probe is initiated                                                           | `15`                                                      |
+| `redis.readinessProbe.timeoutSeconds`         | When the Redis probe times out                                                                                | `1`                                                       |
+| `redis.readinessProbe.failureThreshold`       | Minimum consecutive failures for the Redis probe to be considered failed after having succeeded.              | `3`                                                       |
+| `redis.readinessProbe.periodSeconds`          | How often to perform the probe                                                                                | `5`                                                       |
+| `redis.readinessProbe.successThreshold`       | Minimum consecutive successes for the probe to be considered successful after having failed.                  | `1`                                                       |
+| `redis.resources`                             | CPU/Memory for master/slave nodes resource requests/limits                                                    | `{}`                                                      |
+| `sentinel.port`                               | Port to access the sentinel service                                                                           | `26379`                                                   |
+| `sentinel.quorum`                             | Minimum number of servers necessary to maintain quorum                                                        | `2`                                                       |
+| `sentinel.config`                             | Valid sentinel config options in this section will be applied as config options to each sentinel (see below)  | see values.yaml                                           |
+| `sentinel.customConfig`                       | Allows for custom sentinel.conf files to be applied. If this is used then `sentinel.config` is ignored        | ``                                                        |
+| `sentinel.livenessProbe.initialDelaySeconds`  | Delay before the Sentinel liveness probe is initiated                                                         | `30`                                                      |
+| `sentinel.livenessProbe.timeoutSeconds`       | When the Sentinel probe times out                                                                             | `1`                                                       |
+| `sentinel.livenessProbe.failureThreshold`     | Minimum consecutive failures for the Sentinel probe to be considered failed after having succeeded.           | `3`                                                       |
+| `sentinel.livenessProbe.periodSeconds`        | How often to perform the probe                                                                                | `5`                                                       |
+| `sentinel.livenessProbe.successThreshold`     | Minimum consecutive successes for the Sentinel probe to be considered successful after having failed.         | `1`                                                       |
+| `sentinel.readinessProbe.initialDelaySeconds` | Delay before the Sentinel readiness probe is initiated                                                        | `15`                                                      |
+| `sentinel.readinessProbe.timeoutSeconds`      | When the probe times out                                                                                      | `1`                                                       |
+| `sentinel.readinessProbe.failureThreshold`    | Minimum consecutive failures for the Sentinel probe to be considered failed after having succeeded.           | `3`                                                       |
+| `sentinel.readinessProbe.periodSeconds`       | How often to perform the probe                                                                                | `5`                                                       |
+| `sentinel.readinessProbe.successThreshold`    | Minimum consecutive successes for the probe to be considered successful after having failed.                  | `1`                                                       |
+| `sentinel.resources`                          | CPU/Memory for sentinel node resource requests/limits                                                         | `{}`                                                      |
+| `auth`                                        | Enables or disables redis AUTH (Requires `redisPassword` to be set)                                           | `false`                                                   |
+| `redisPassword`                               | A password that configures a `requirepass` and `masterauth` in the conf parameters (Requires `auth: enabled`) | ``                                                        |
+| `nodeSelector`                                | Node labels for pod assignment                                                                                | `{}`                                                      |
+| `tolerations`                                 | Toleration labels for pod assignment                                                                          | `[]`                                                      |
+| `podAntiAffinity.server`                      | Antiaffinity for pod assignment of servers                                                                    | `Hard node affinity and soft zone affinity`               |
+>>>>>>> Stashed changes
 
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,

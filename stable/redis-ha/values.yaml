@@ -32,6 +32,20 @@ redis:
   # customConfig: |-
       # Define configuration here
 
+  livenessProbe:
+    initialDelaySeconds: 30
+    timeoutSeconds: 1
+    failureThreshold: 3
+    periodSeconds: 5
+    successThreshold: 1
+
+  readinessProbe:
+    initialDelaySeconds: 15
+    timeoutSeconds: 1
+    failureThreshold: 3
+    periodSeconds: 5
+    successThreshold: 1
+
   resources: {}
   #  requests:
   #    memory: 200Mi
@@ -57,6 +71,20 @@ sentinel:
   ## specified then the sentinel.config above will be ignored.
   # customConfig: |-
       # Define configuration here
+
+  livenessProbe:
+    initialDelaySeconds: 30
+    timeoutSeconds: 1
+    failureThreshold: 3
+    periodSeconds: 5
+    successThreshold: 1
+
+  readinessProbe:
+    initialDelaySeconds: 15
+    timeoutSeconds: 1
+    failureThreshold: 3
+    periodSeconds: 5
+    successThreshold: 1
 
   resources: {}
   #  requests:
@@ -97,7 +125,7 @@ podDisruptionBudget: {}
 
 ## Configures redis with AUTH (requirepass & masterauth conf params)
 auth: false
-# redisPassword:
+# redisPassword: redis123456
 
 ## Use existing secret containing "auth" key (ignores redisPassword)
 # existingSecret:
